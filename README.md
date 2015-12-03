@@ -22,9 +22,10 @@ Usage
 
 ```php
 
-use albaraam\gcmapns;
+use albaraam\gcmapns\Message;
+use albaraam\gcmapns\Client;
 
-$message = Message("Title","Body");
+$message = new Message("Title","Body");
 
 $message
 	->setTitle("Title")
