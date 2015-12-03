@@ -1,0 +1,26 @@
+{
+    "name": "albaraam/php-gcm-apns",
+    "description": "A PHP Library for sending messages to devices (Android & IOS) through GCM and Apns (respectively).",
+    "keywords": ["php", "gcm", "apns", "php-gcm-apns", "push"],
+    "minimum-stability": "dev",
+    "type": "library",
+    "license": "MIT License",
+    "support": {
+        "issues": "https://github.com/albaraam/php-gcm-apns/issues",
+        "source": "https://github.com/albaraam/php-gcm-apns"
+    },
+    "authors": [
+        {
+            "name": "Albaraa Mishlawi",
+            "email": "albaraa_m@live.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "albaraam/php-gcm": "dev-master",
+        "duccio/apns-php": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "albaraam\\gcmapns\\": "src/" }
+    }
+}
