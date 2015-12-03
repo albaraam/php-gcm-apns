@@ -2,10 +2,14 @@
 
 namespace albaraam\gmcapns;
 
+use albaraam\gcm\GCMClient;
+use albaraam\gcm\GCMMessage;
+use albaraam\gcm\GCMNotification;
+
 /**
 * Client
 */
-class Client extends AnotherClass
+class Client
 {
 	const IOS_ENVIRONMENT_SANDBOX = 0;
 	const IOS_ENVIRONMENT_PRODUCTION = 1;
@@ -33,6 +37,9 @@ class Client extends AnotherClass
 
 	private $ios_socket_select_timeout;
 
+	/*
+	 * @var GCMClient
+	 * */
 	private $_android_client = null;
 
 	private $_ios_client = null;
@@ -52,7 +59,29 @@ class Client extends AnotherClass
 
 	public function sendAndroid(Message $message)
 	{
-		
+		// payload notification
+		$notification = new GCMNotification($message->android->getTitle(),$message->android->getBody());
+		$notification->setBodyLocKey($message->android->getBodyLocKey());
+		$notification->setBodyLocArgs($message->android->getBodyLocArgs());
+		$notification->setClickAction($message->android->getClickAction());
+		$notification->setColor($message->android->getColor());
+		$notification->setIcon($message->android->getIcon());
+		$notification->setSound($message->android->getSound());
+		$notification->setTag($message->android->getTag());
+		$notification->setTitleLocKey($message->android->getTitleLocKey());
+		$notification->setTitleLocArgs($message->android->getTitleLocArgs());
+		// registration ids
+		$_message = new GCMMessage($notification,$message->android->getTo());
+		// options
+		$_message->setCollapseKey($message->android->getCollapseKey());
+		$_message->setDelayWhileIdle($message->android->getDelayWhileIdle());
+		$_message->setDryRun($message->android->isDryRun());
+		$_message->setRestrictedPackageName($message->android->getRestrictedPackageName());
+		$_message->setTimeToLive($message->android->getTimeToLive());
+		// payload data
+		$_message->setData($message->android->getData());
+
+		$this->getAndroidClient()->send($_message);
 	}
 
 	public function sendIOS(Message $message)
@@ -63,6 +92,7 @@ class Client extends AnotherClass
 	private function getAndroidClient()
 	{
 		if($this->_android_client == null){
+
 			$this->_android_client = new GCMClient($this->google_api_key);
 		}
 		return $this->_android_client;
