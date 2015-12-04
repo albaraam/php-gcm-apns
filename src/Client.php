@@ -56,8 +56,8 @@ class Client
 
 	public function send(Message $message)
 	{
-		$this->sendAndroid($message);
-		$this->sendIOS($message);
+		if($this->getAndroidClient()) $this->sendAndroid($message);
+		if($this->getIOSClient()) $this->sendIOS($message);
 	}
 
 	public function sendAndroid(Message $message)
