@@ -25,6 +25,50 @@ Usage
 use albaraam\gcmapns\Message;
 use albaraam\gcmapns\Client;
 
+// Message creation
+$message = new Message("Title","Body");
+
+// Common attributes for both ios and android
+$message
+	->setTitle("Title")
+	->setBody("Body")
+	->setSound("sound.mp3")
+	->setData(['foo'=>'bar']);
+
+// Android specific attributes
+$message->android
+	->setTo("ids")
+	->setIcon("icon")
+	->setCollapseKey("collapse_key")
+	->setColor("#333");
+
+// IOS specific attributes
+$message->ios
+	->setTo("ids")
+	->setSound("sound_ios.mp3") // custom sound for ios
+	->setBadge(3);
+
+// Client
+$client = new Client("google_api_key","path/to/pem/file",Client::IOS_IOS_ENVIRONMENT_SANDBOX);
+
+// configure client
+$client->setIosPassphrase("passphrase");
+...
+
+// Send message
+$client->send($message);
+
+```
+
+
+Usage: Advanced Example
+-----------------------
+
+```php
+
+use albaraam\gcmapns\Message;
+use albaraam\gcmapns\Client;
+
 $message = new Message("Title","Body");
 
 $message
@@ -58,28 +102,11 @@ $message->ios
 	->setLaunchImage("")
 	->setBadge(3);
 
-$client = new Client("google_api_key","path/to/pem/file","passphrase");
-$client->setIOSEnvironment(Client::IOS_ENVIRONMENT_SANDBOX);
+$client = new Client("google_api_key","path/to/pem/file",Client::IOS_IOS_ENVIRONMENT_SANDBOX);
+$client->setIosPassphrase("passphrase");
 
-
-
-$client->
-
-$notification = new GCMNotification("Title","Body");
-$notification
-	->setIcon("noti")
-	->setSound("water.mp3");
-.....
-
-$message = new GCMMessage($notification, "ids"); // "ids" field can contain a array/single registration token or a topic key
-$message
-	->setData(['foo'=>'bar', 'baz'=>[1,2,3]])
-	->setCollapseKey("collapse-key-1");
-.....
-
-$gcm = new GCMClient("YOUR_API_KEY"); 
-$response = $gcm->send($message);
-
-var_dump($response);
+$client->sendAndroid($message)) // send for android devices only
+$client->sendIOS($message)) // send for ios devices only
+// $client->send($message)) // send for both ios & android devices
 
 ```
