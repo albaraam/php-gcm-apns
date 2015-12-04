@@ -73,6 +73,7 @@ class Client
 		$notification->setTag($message->android->getTag());
 		$notification->setTitleLocKey($message->android->getTitleLocKey());
 		$notification->setTitleLocArgs($message->android->getTitleLocArgs());
+
 		// registration ids
 		$_message = new GCMMessage($notification,$message->android->getTo());
 		// options
@@ -84,7 +85,7 @@ class Client
 		// payload data
 		$_message->setData($message->android->getData());
 
-		$this->getAndroidClient()->send($_message);
+		return $this->getAndroidClient()->send($_message);
 	}
 
 	public function sendIOS(Message $message)
