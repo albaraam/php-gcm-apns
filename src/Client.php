@@ -118,7 +118,8 @@ class Client
 	private function getIOSClient()
 	{
 		if($this->_ios_client == null) {
-			if($this->ios_environment == "" || $this->ios_pem_file == ""){
+			if($this->ios_environment == "" || $this->ios_pem_file == ""
+				|| $this->ios_environment == null || $this->ios_pem_file == null){
 				return null;
 			}
 			$this->_ios_client = new \ApnsPHP_Push(
