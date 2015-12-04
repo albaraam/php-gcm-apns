@@ -5,7 +5,7 @@
  * Time: 4:28 PM
  */
 
-namespace albaraam\gmcapns;
+namespace albaraam\gcmapns;
 
 
 class BaseMessage

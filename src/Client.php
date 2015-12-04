@@ -1,6 +1,6 @@
 <?php
 
-namespace albaraam\gmcapns;
+namespace albaraam\gcmapns;
 
 use albaraam\gcm\GCMClient;
 use albaraam\gcm\GCMMessage;
