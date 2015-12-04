@@ -21,124 +21,163 @@ class Message extends BaseMessage
         $this->ios = new IOSMessage();
         $this->setTitle($title);
         $this->setBody($body);
+        return $this;
     }
 
     /**
      * @param string $title
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
         $this->android->setTitle($title);
         $this->ios->setTitle($title);
+        return $this;
     }
+
     /**
      * @param string $body
+     * @return $this
      */
     public function setBody($body)
     {
         $this->body = $body;
         $this->android->setBody($body);
         $this->ios->setBody($body);
+        return $this;
     }
+
     /**
      * @param int $priority
+     * @return $this
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
         $this->android->setPriority($priority);
         $this->ios->setPriority($priority);
+        return $this;
     }
+
     /**
      * @param boolean $contentAvailable
+     * @return $this
      */
     public function setContentAvailable($contentAvailable)
     {
         $this->contentAvailable = $contentAvailable;
         $this->android->setContentAvailable($contentAvailable);
         $this->ios->setContentAvailable($contentAvailable);
+        return $this;
     }
+
     /**
      * @param boolean $dryRun
+     * @return $this
      */
     public function setDryRun($dryRun)
     {
         $this->dryRun = $dryRun;
         $this->android->setDryRun($dryRun);
         $this->ios->setDryRun($dryRun);
+        return $this;
     }
+
     /**
      * @param string $clickAction
+     * @return $this
      */
     public function setClickAction($clickAction)
     {
         $this->clickAction = $clickAction;
         $this->android->setClickAction($clickAction);
         $this->ios->setCategory($clickAction);
+        return $this;
     }
+
     /**
      * @param string $category
+     * @return $this
      */
     public function setCategory($category)
     {
         $this->category = $category;
         $this->android->setClickAction($category);
         $this->ios->setCategory($category);
+        return $this;
     }
+
     /**
      * @param string $titleLocKey
+     * @return $this
      */
     public function setTitleLocKey($titleLocKey)
     {
         $this->titleLocKey = $titleLocKey;
         $this->android->setTitleLocKey($titleLocKey);
         $this->ios->setTitleLocKey($titleLocKey);
+        return $this;
     }
+
     /**
      * @param string $titleLocArgs
+     * @return $this
      */
     public function setTitleLocArgs($titleLocArgs)
     {
         $this->titleLocArgs = $titleLocArgs;
         $this->android->setTitleLocArgs($titleLocArgs);
         $this->ios->setTitleLocArgs($titleLocArgs);
+        return $this;
     }
+
     /**
      * @param string $bodyLocKey
+     * @return $this
      */
     public function setBodyLocKey($bodyLocKey)
     {
         $this->bodyLocKey = $bodyLocKey;
         $this->android->setBodyLocKey($bodyLocKey);
         $this->ios->setBodyLocKey($bodyLocKey);
+        return $this;
     }
+
     /**
      * @param string $bodyLocArgs
+     * @return $this
      */
     public function setBodyLocArgs($bodyLocArgs)
     {
         $this->bodyLocArgs = $bodyLocArgs;
         $this->android->setBodyLocArgs($bodyLocArgs);
         $this->ios->setBodyLocArgs($bodyLocArgs);
+        return $this;
     }
+
     /**
      * @param string $sound
+     * @return $this
      */
     public function setSound($sound)
     {
         $this->sound = $sound;
         $this->android->setSound($sound);
         $this->ios->setSound($sound);
+        return $this;
     }
+
     /**
      * @param array|null $data
+     * @return $this
      */
     public function setData($data)
     {
         $this->data = $data;
         $this->android->setData($data);
         $this->ios->setData($data);
+        return $this;
     }
 
 }
@@ -164,10 +203,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $to
+     * @return $this
      */
     public function setTo($to)
     {
         $this->to = (is_array($to)) ? $to : [$to];
+        return $this;
     }
 
     /**
@@ -180,10 +221,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $icon
+     * @return $this
      */
     public function setIcon($icon)
     {
         $this->icon = $icon;
+        return $this;
     }
 
     /**
@@ -196,10 +239,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $collapseKey
+     * @return $this
      */
     public function setCollapseKey($collapseKey)
     {
         $this->collapseKey = $collapseKey;
+        return $this;
     }
 
     /**
@@ -212,10 +257,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $delayWhileIdle
+     * @return $this
      */
     public function setDelayWhileIdle($delayWhileIdle)
     {
         $this->delayWhileIdle = $delayWhileIdle;
+        return $this;
     }
 
     /**
@@ -228,10 +275,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $timeToLive
+     * @return $this
      */
     public function setTimeToLive($timeToLive)
     {
         $this->timeToLive = $timeToLive;
+        return $this;
     }
 
     /**
@@ -244,10 +293,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $restrictedPackageName
+     * @return $this
      */
     public function setRestrictedPackageName($restrictedPackageName)
     {
         $this->restrictedPackageName = $restrictedPackageName;
+        return $this;
     }
 
     /**
@@ -260,10 +311,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $tag
+     * @return $this
      */
     public function setTag($tag)
     {
         $this->tag = $tag;
+        return $this;
     }
 
     /**
@@ -276,14 +329,12 @@ class AndroidMessage extends BaseMessage{
 
     /**
      * @param mixed $color
+     * @return $this
      */
     public function setColor($color)
     {
         $this->color = $color;
-    }
-
-    public function toArray(){
-
+        return $this;
     }
 
 }
@@ -304,10 +355,12 @@ class IOSMessage extends BaseMessage{
 
     /**
      * @param mixed $to
+     * @return $this
      */
     public function setTo($to)
     {
         $this->to = (is_array($to)) ? $to : [$to];
+        return $this;
     }
 
     /**
@@ -320,10 +373,12 @@ class IOSMessage extends BaseMessage{
 
     /**
      * @param mixed $launchImage
+     * @return $this
      */
     public function setLaunchImage($launchImage)
     {
         $this->launchImage = $launchImage;
+        return $this;
     }
 
     /**
@@ -336,13 +391,12 @@ class IOSMessage extends BaseMessage{
 
     /**
      * @param mixed $badge
+     * @return $this
      */
     public function setBadge($badge)
     {
         $this->badge = $badge;
+        return $this;
     }
 
-    public function toArray(){
-
-    }
 }

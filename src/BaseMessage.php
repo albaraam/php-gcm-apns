@@ -74,10 +74,12 @@ class BaseMessage
 
     /**
      * @param string $title
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+        return $this;
     }
 
     /**
@@ -90,10 +92,12 @@ class BaseMessage
 
     /**
      * @param string $body
+     * @return $this
      */
     public function setBody($body)
     {
         $this->body = $body;
+        return $this;
     }
 
     /**
@@ -106,10 +110,12 @@ class BaseMessage
 
     /**
      * @param int $priority
+     * @return $this
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
+        return $this;
     }
 
     /**
@@ -122,10 +128,12 @@ class BaseMessage
 
     /**
      * @param boolean $contentAvailable
+     * @return $this
      */
     public function setContentAvailable($contentAvailable)
     {
         $this->contentAvailable = $contentAvailable;
+        return $this;
     }
 
     /**
@@ -138,10 +146,12 @@ class BaseMessage
 
     /**
      * @param boolean $dryRun
+     * @return $this
      */
     public function setDryRun($dryRun)
     {
         $this->dryRun = $dryRun;
+        return $this;
     }
 
     /**
@@ -154,10 +164,12 @@ class BaseMessage
 
     /**
      * @param string $clickAction
+     * @return $this
      */
     public function setClickAction($clickAction)
     {
         $this->clickAction = $clickAction;
+        return $this;
     }
 
     /**
@@ -170,10 +182,12 @@ class BaseMessage
 
     /**
      * @param string $category
+     * @return $this
      */
     public function setCategory($category)
     {
         $this->category = $category;
+        return $this;
     }
 
     /**
@@ -186,10 +200,12 @@ class BaseMessage
 
     /**
      * @param string $titleLocKey
+     * @return $this
      */
     public function setTitleLocKey($titleLocKey)
     {
         $this->titleLocKey = $titleLocKey;
+        return $this;
     }
 
     /**
@@ -202,10 +218,12 @@ class BaseMessage
 
     /**
      * @param string $titleLocArgs
+     * @return $this
      */
     public function setTitleLocArgs($titleLocArgs)
     {
         $this->titleLocArgs = $titleLocArgs;
+        return $this;
     }
 
     /**
@@ -218,10 +236,12 @@ class BaseMessage
 
     /**
      * @param string $bodyLocKey
+     * @return $this
      */
     public function setBodyLocKey($bodyLocKey)
     {
         $this->bodyLocKey = $bodyLocKey;
+        return $this;
     }
 
     /**
@@ -234,10 +254,12 @@ class BaseMessage
 
     /**
      * @param string $bodyLocArgs
+     * @return $this
      */
     public function setBodyLocArgs($bodyLocArgs)
     {
         $this->bodyLocArgs = $bodyLocArgs;
+        return $this;
     }
 
     /**
@@ -250,10 +272,12 @@ class BaseMessage
 
     /**
      * @param string $sound
+     * @return $this
      */
     public function setSound($sound)
     {
         $this->sound = $sound;
+        return $this;
     }
 
     /**
@@ -266,10 +290,12 @@ class BaseMessage
 
     /**
      * @param array|null $data
+     * @return $this
      */
     public function setData($data)
     {
         $this->data = $data;
+        return $this;
     }
 
 
