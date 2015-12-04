@@ -29,13 +29,15 @@ class Client
 
 	private $ios_write_interval;
 
-	private $ios_timeout;
+	private $ios_connect_timeout;
 
-	private $ios_retry_times;
+	private $ios_connect_retry_times;
 
-	private $ios_retry_interval;
+	private $ios_connect_retry_interval;
 
 	private $ios_socket_select_timeout;
+
+	private $ios_logger;
 
 	/*
 	 * @var GCMClient
@@ -45,16 +47,17 @@ class Client
 	private $_ios_client = null;
 
 	
-	function __construct($google_api_key = "", $ios_pem_file = null, $ios_passphrase = "")
+	function __construct($google_api_key, $ios_pem_file, $ios_environment)
 	{
 		$this->google_api_key = $google_api_key;
 		$this->ios_pem_file = $ios_pem_file;
-		$this->ios_passphrase = $ios_passphrase;
+		$this->ios_environment = $ios_environment;
 	}
 
 	public function send(Message $message)
 	{
-		// TODO: send
+		$this->sendAndroid($message);
+		$this->sendIOS($message);
 	}
 
 	public function sendAndroid(Message $message)
@@ -86,13 +89,27 @@ class Client
 
 	public function sendIOS(Message $message)
 	{
-		
+		// Prepare message
+		$_message = new \ApnsPHP_Message();
+		foreach ($message->ios->getTo() as $token) {
+			$_message->addRecipient($token);
+		}
+		$_message->setText($message->ios->getBody());
+		$_message->setBadge($message->ios->getBadge());
+		$_message->setSound($message->ios->getSound());
+		$_message->setContentAvailable($message->ios->isContentAvailable());
+		$_message->setCategory($message->ios->getCategory());
+		// Connection
+		$this->getIOSClient()->connect();
+		$this->getIOSClient()->add($_message);
+		$this->getIOSClient()->send();
+		$this->getIOSClient()->disconnect();
 	}
 
 	private function getAndroidClient()
 	{
 		if($this->_android_client == null){
-
+			if($this->google_api_key == "") return null;
 			$this->_android_client = new GCMClient($this->google_api_key);
 		}
 		return $this->_android_client;
@@ -101,6 +118,9 @@ class Client
 	private function getIOSClient()
 	{
 		if($this->_ios_client == null) {
+			if($this->ios_environment == "" || $this->ios_pem_file == ""){
+				return null;
+			}
 			$this->_ios_client = new \ApnsPHP_Push(
 					$this->ios_environment == self::IOS_ENVIRONMENT_PRODUCTION
 							? \ApnsPHP_Push::ENVIRONMENT_PRODUCTION
@@ -122,14 +142,6 @@ class Client
 	}
 
 	/**
-	 * @param string $google_api_key
-	 */
-	public function setGoogleApiKey($google_api_key)
-	{
-		$this->google_api_key = $google_api_key;
-	}
-
-	/**
 	 * @return mixed
 	 */
 	public function getIosEnvironment()
@@ -138,27 +150,11 @@ class Client
 	}
 
 	/**
-	 * @param mixed $ios_environment
-	 */
-	public function setIosEnvironment($ios_environment)
-	{
-		$this->ios_environment = $ios_environment;
-	}
-
-	/**
-	 * @return null
+	 * @return string
 	 */
 	public function getIosPemFile()
 	{
 		return $this->ios_pem_file;
-	}
-
-	/**
-	 * @param null $ios_pem_file
-	 */
-	public function setIosPemFile($ios_pem_file)
-	{
-		$this->ios_pem_file = $ios_pem_file;
 	}
 
 	/**
@@ -170,7 +166,7 @@ class Client
 	}
 
 	/**
-	 * @param string $ios_passphrase
+	 * @return string
 	 */
 	public function setIosPassphrase($ios_passphrase)
 	{
@@ -191,6 +187,7 @@ class Client
 	public function setIosProviderCertificatePassphrase($ios_provider_certificate_passphrase)
 	{
 		$this->ios_provider_certificate_passphrase = $ios_provider_certificate_passphrase;
+		$this->getIOSClient()->setProviderCertificatePassphrase($ios_provider_certificate_passphrase);
 	}
 
 	/**
@@ -207,6 +204,7 @@ class Client
 	public function setIosRootCertificationAuthority($ios_root_certification_authority)
 	{
 		$this->ios_root_certification_authority = $ios_root_certification_authority;
+		$this->getIOSClient()->setRootCertificationAuthority($ios_root_certification_authority);
 	}
 
 	/**
@@ -223,54 +221,58 @@ class Client
 	public function setIosWriteInterval($ios_write_interval)
 	{
 		$this->ios_write_interval = $ios_write_interval;
+		$this->getIOSClient()->setWriteInterval($ios_write_interval);
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIosTimeout()
+	public function getIosConnectTimeout()
 	{
-		return $this->ios_timeout;
+		return $this->ios_connect_timeout;
 	}
 
 	/**
-	 * @param mixed $ios_timeout
+	 * @param mixed $ios_connect_timeout
 	 */
-	public function setIosTimeout($ios_timeout)
+	public function setIosConnectTimeout($ios_connect_timeout)
 	{
-		$this->ios_timeout = $ios_timeout;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getIosRetryTimes()
-	{
-		return $this->ios_retry_times;
-	}
-
-	/**
-	 * @param mixed $ios_retry_times
-	 */
-	public function setIosRetryTimes($ios_retry_times)
-	{
-		$this->ios_retry_times = $ios_retry_times;
+		$this->ios_connect_timeout = $ios_connect_timeout;
+		$this->getIOSClient()->setConnectTimeout($ios_connect_timeout);
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIosRetryInterval()
+	public function getIosConnectRetryTimes()
 	{
-		return $this->ios_retry_interval;
+		return $this->ios_connect_retry_times;
 	}
 
 	/**
-	 * @param mixed $ios_retry_interval
+	 * @param mixed $ios_connect_retry_times
 	 */
-	public function setIosRetryInterval($ios_retry_interval)
+	public function setIosConnectRetryTimes($ios_connect_retry_times)
 	{
-		$this->ios_retry_interval = $ios_retry_interval;
+		$this->ios_connect_retry_times = $ios_connect_retry_times;
+		$this->getIOSClient()->setConnectRetryTimes($ios_connect_retry_times);
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIosConnectRetryInterval()
+	{
+		return $this->ios_connect_retry_interval;
+	}
+
+	/**
+	 * @param mixed $ios_connect_retry_interval
+	 */
+	public function setIosConnectRetryInterval($ios_connect_retry_interval)
+	{
+		$this->ios_connect_retry_interval = $ios_connect_retry_interval;
+		$this->getIOSClient()->setConnectRetryInterval($ios_connect_retry_interval);
 	}
 
 	/**
@@ -287,6 +289,24 @@ class Client
 	public function setIosSocketSelectTimeout($ios_socket_select_timeout)
 	{
 		$this->ios_socket_select_timeout = $ios_socket_select_timeout;
+		$this->getIOSClient()->setSocketSelectTimeout($ios_socket_select_timeout);
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIosLogger()
+	{
+		return $this->ios_logger;
+	}
+
+	/**
+	 * @param mixed $ios_logger
+	 */
+	public function setIosLogger(\ApnsPHP_Log_Interface $ios_logger)
+	{
+		$this->ios_logger = $ios_logger;
+		$this->getIOSClient()->setLogger($ios_logger);
 	}
 
 
