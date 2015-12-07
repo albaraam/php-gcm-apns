@@ -1,7 +1,7 @@
-PHP albaraam/php-gcm library Change Log
+PHP albaraam/php-gcm-apns library Change Log
 ===============================================
 
-1.0.0-beta December 2, 2015
+1.0.0-beta December 3, 2015
 -------------------------
 
 - Initial release.
