@@ -56,8 +56,10 @@ class Client
 
 	public function send(Message $message)
 	{
-		if($this->getAndroidClient()) $this->sendAndroid($message);
-		if($this->getIOSClient()) $this->sendIOS($message);
+		$response = ["android"=>[],"ios"=>[]];
+		if($this->getAndroidClient()) $response['android'] = $this->sendAndroid($message);
+		if($this->getIOSClient()) $response['ios'] = $this->sendIOS($message);
+		return $response;
 	}
 
 	public function sendAndroid(Message $message)
@@ -105,6 +107,7 @@ class Client
 		$this->getIOSClient()->add($_message);
 		$this->getIOSClient()->send();
 		$this->getIOSClient()->disconnect();
+		return $this->getIOSClient()->getErrors(true);
 	}
 
 	private function getAndroidClient()
