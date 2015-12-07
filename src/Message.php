@@ -344,6 +344,7 @@ class IOSMessage extends BaseMessage{
     private $to;
     private $launchImage;
     private $badge;
+    private $actionLocKey;
 
     /**
      * @return mixed
@@ -397,6 +398,22 @@ class IOSMessage extends BaseMessage{
     {
         $this->badge = $badge;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActionLocKey()
+    {
+        return $this->actionLocKey;
+    }
+
+    /**
+     * @param mixed $actionLocKey
+     */
+    public function setActionLocKey($actionLocKey)
+    {
+        $this->actionLocKey = $actionLocKey;
     }
 
 }

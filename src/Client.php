@@ -93,15 +93,22 @@ class Client
 	public function sendIOS(Message $message)
 	{
 		// Prepare message
-		$_message = new \ApnsPHP_Message();
+		// $_message = new \ApnsPHP_Message();
+		$_message = new \ApnsPHP_Message_Custom();
 		foreach ($message->ios->getTo() as $token) {
 			$_message->addRecipient($token);
 		}
+		// normal ApnsPHP_Message
 		$_message->setText($message->ios->getBody());
 		$_message->setBadge($message->ios->getBadge());
 		$_message->setSound($message->ios->getSound());
 		$_message->setContentAvailable($message->ios->isContentAvailable());
 		$_message->setCategory($message->ios->getCategory());
+		// custom ApnsPHP_Message
+		$_message->setTitle($message->ios->getTitle());
+		$_message->setLocKey($message->ios->getBodyLocKey());
+		$_message->setLocArgs($message->ios->getBodyLocArgs());
+		$_message->setLaunchImage($message->ios->getLaunchImage());
 		// Connection
 		$this->getIOSClient()->connect();
 		$this->getIOSClient()->add($_message);
