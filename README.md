@@ -100,7 +100,8 @@ $message->android
 $message->ios
 	->setTo("ids")
 	->setLaunchImage("")
-	->setBadge(3);
+	->setBadge(3)
+	->setActionLocKey("");
 
 $client = new Client("google_api_key","path/to/pem/file",Client::IOS_IOS_ENVIRONMENT_SANDBOX);
 $client->setIosPassphrase("passphrase");
