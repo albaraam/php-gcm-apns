@@ -4,7 +4,7 @@ A PHP Library for sending messages to devices (Android & IOS) through GCM and Ap
 
 
 Installation
-------------
+-------------
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
