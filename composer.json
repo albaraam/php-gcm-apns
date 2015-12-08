@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "albaraam/php-gcm": "1.0.0-beta",
+        "albaraam/php-gcm": "v1.0.0-beta",
         "duccio/apns-php": "dev-master"
     },
     "autoload": {
