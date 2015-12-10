@@ -4,6 +4,7 @@
     "keywords": ["php", "gcm", "apns", "php-gcm-apns", "push"],
     "type": "library",
     "license": "MIT License",
+    "minimum-stability": "dev",
     "support": {
         "issues": "https://github.com/albaraam/php-gcm-apns/issues",
         "source": "https://github.com/albaraam/php-gcm-apns"
