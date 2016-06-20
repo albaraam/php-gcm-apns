@@ -75,6 +75,7 @@ class Client
 		$notification->setTag($message->android->getTag());
 		$notification->setTitleLocKey($message->android->getTitleLocKey());
 		$notification->setTitleLocArgs($message->android->getTitleLocArgs());
+		$notification->setContentAvailable($message->android->isContentAvailable());
 
 		// registration ids
 		$_message = new GCMMessage($notification,$message->android->getTo());
