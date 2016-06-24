@@ -55,7 +55,7 @@ $message->ios
 	->setBadge(3);
 
 // Client
-$client = new Client("google_api_key","path/to/pem/file",Client::IOS_IOS_ENVIRONMENT_SANDBOX);
+$client = new Client("google_api_key","path/to/pem/file",Client::IOS_ENVIRONMENT_SANDBOX);
 
 // configure client
 $client->setIosPassphrase("passphrase");
@@ -109,7 +109,7 @@ $message->ios
 	->setBadge(3)
 	->setActionLocKey("");
 
-$client = new Client("google_api_key","path/to/pem/file",Client::IOS_IOS_ENVIRONMENT_SANDBOX);
+$client = new Client("google_api_key","path/to/pem/file",Client::IOS_ENVIRONMENT_SANDBOX);
 $client->setIosPassphrase("passphrase");
 
 $client->sendAndroid($message)) // send for android devices only
