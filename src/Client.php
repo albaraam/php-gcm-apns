@@ -110,6 +110,10 @@ class Client
 		$_message->setLocKey($message->ios->getBodyLocKey());
 		$_message->setLocArgs($message->ios->getBodyLocArgs());
 		$_message->setLaunchImage($message->ios->getLaunchImage());
+		// set additional data (payload data)
+		foreach ($message->ios->getData() as $key => $value) {
+			$_message->setCustomProperty($key, $value);
+		}
 		// Connection
 		$this->getIOSClient()->connect();
 		$this->getIOSClient()->add($_message);
